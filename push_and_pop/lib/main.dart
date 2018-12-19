@@ -46,7 +46,7 @@ class FirstScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: RaisedButton(
-                child: Text('Launch screen'),
+                child: Text('Launch Screen'),
                 onPressed: () {
                   // Navigate to the second screen using a named route
                   Navigator.pushNamed(context, '/second');
@@ -57,6 +57,16 @@ class FirstScreen extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: RaisedButton(
                 child: Text('Launch Todos'),
+                onPressed: () {
+                  // Navigate to the second screen using a named route
+                  Navigator.pushNamed(context, '/todoList');
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: RaisedButton(
+                child: Text('Launch Hello'),
                 onPressed: () {
                   // Navigate to the second screen using a named route
                   Navigator.pushNamed(context, '/todoList');
@@ -90,21 +100,6 @@ class SecondScreen extends StatelessWidget {
     );
   }
 }
-
-//void main() {
-//  runApp(MaterialApp(
-//    title: 'Passing Data',
-//    home: TodosScreen(
-//      todos: List.generate(
-//        20,
-//            (i) => Todo(
-//          'Todo $i',
-//          'A description of what needs to be done for Todo $i',
-//        ),
-//      ),
-//    ),
-//  ));
-//}
 
 class TodosScreen extends StatelessWidget {
   final List<Todo> todos;
