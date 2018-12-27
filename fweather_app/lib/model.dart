@@ -80,15 +80,15 @@ class MainInformation {
 }
 
 class ForecastData {
-  int dt;
+  int timeStamp;
   Weather weather;
   MainInformation mainInformation;
 
-  ForecastData({this.dt, this.weather, this.mainInformation});
+  ForecastData({this.timeStamp, this.weather, this.mainInformation});
 
   factory ForecastData.fromJson(Map<String, dynamic> parsedJson) {
     return ForecastData(
-      dt: parsedJson['dt'],
+      timeStamp: parsedJson['dt'],
       weather: Weather.fromJson(parsedJson['weather'][0]),
       mainInformation: MainInformation.fromJson(parsedJson['main']),
     );
