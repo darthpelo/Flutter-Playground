@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:fweather_app/model.dart';
 
@@ -16,7 +15,7 @@ Forecast parseCities(String responseBody) {
 
 Future<Forecast> fetchCities(http.Client client) async {
   final response =
-  await client.get('https://api.openweathermap.org/data/2.5/forecast?appid=87503ac43c029650c30e680e36218cd5&q=milan&units=metric');
+  await client.get('https://api.openweathermap.org/data/2.5/forecast?appid=87503ac43c029650c30e680e36218cd5&q=amsterdam&units=metric');
 
   return parseCities(response.body);
 }

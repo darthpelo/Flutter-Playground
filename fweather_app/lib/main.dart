@@ -27,7 +27,7 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title + ' Milan'),
+        title: Text(title + ' Amsterdam'),
       ),
       body: FutureBuilder<Forecast>(
         future: fetchCities(http.Client()),
@@ -46,6 +46,7 @@ class MyHomePage extends StatelessWidget {
 class CitiesList extends StatelessWidget {
   final Forecast forecast;
   final _biggerFont = const TextStyle(fontSize: 18.0);
+  final _smallerFont = const TextStyle(color: Colors.lightBlue, fontSize: 12.0);
 
   CitiesList({Key key, this.forecast}) : super(key: key);
 
@@ -64,9 +65,10 @@ class CitiesList extends StatelessWidget {
   Widget _buildRow(ForecastData data) {
     return ListTile(
         title: Text(
-          data.dt.toString(),
+          data.weather.description,
           style: _biggerFont,
         ),
-        subtitle: Text(data.weather.description));
+        subtitle: Text(data.mainInformation.temp + ' ℃',
+            style: _smallerFont));
   }
 }
