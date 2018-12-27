@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 Future<List<Photo>> fetchPhotos(http.Client client) async {
   final response =
-  await client.get('https://jsonplaceholder.typicode.com/photos');
+  await client.get('https://api.openweathermap.org/data/2.5/forecast?appid=87503ac43c029650c30e680e36218cd5&q=milan&units=metric');
 
   // Use the compute function to run parsePhotos in a separate isolate
   return compute(parsePhotos, response.body);
