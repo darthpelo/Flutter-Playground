@@ -5,10 +5,10 @@ import 'dart:io';
 import 'package:fweather_app/widgets/android_scaffold.dart';
 import 'package:fweather_app/widgets/ios_scaffold.dart';
 
-class MyHomePage extends StatelessWidget {
+class CityForecast extends StatelessWidget {
   final String title;
 
-  MyHomePage({Key key, this.title}) : super(key: key);
+  CityForecast({Key key, this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

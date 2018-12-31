@@ -20,7 +20,7 @@ class IOSForecastList extends StatelessWidget {
       slivers: <Widget>[
         CupertinoSliverNavigationBar(
           largeTitle: Text(title),
-//              leading: Icon(CupertinoIcons.back),
+              trailing: Icon(CupertinoIcons.add),
         ),
         SliverPadding(
           padding: MediaQuery.of(context)

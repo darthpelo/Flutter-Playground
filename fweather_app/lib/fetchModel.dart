@@ -20,3 +20,9 @@ Future<Forecast> fetchCities(http.Client client) async {
   return parseCities(response.body);
 }
 
+Future<Forecast> fetchCity(http.Client client, String cityName) async {
+  final response =
+  await client.get('https://api.openweathermap.org/data/2.5/weather?appid=87503ac43c029650c30e680e36218cd5&q=' + cityName + '&units=metric');
+
+  return parseCities(response.body);
+}
