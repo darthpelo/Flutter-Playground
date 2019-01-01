@@ -10,11 +10,19 @@ import 'package:fweather_app/model.dart';
 import 'package:fweather_app/services/keyschain.dart';
 
 // A function that will convert a response body into a List<Photo>
-Forecast parseCities(String responseBody) {
+Forecast _parseDetailedForecast(String responseBody) {
   final parsed = json.decode(responseBody);
 
   Forecast forecast = new Forecast.fromJson(parsed);
-  print(forecast.runtimeType);
+
+  return forecast;
+}
+
+CityForecast _parsedGeneralForecat(String responseBody) {
+  final parsed = json.decode(responseBody);
+
+  CityForecast forecast = new CityForecast.fromJson(parsed);
+
   return forecast;
 }
 
@@ -22,14 +30,14 @@ Future<Forecast> fetchCities(http.Client client) async {
   final response =
   await client.get('https://api.openweathermap.org/data/2.5/forecast?appid=87503ac43c029650c30e680e36218cd5&q=amsterdam&units=metric');
 
-  return parseCities(response.body);
+  return _parseDetailedForecast(response.body);
 }
 
-Future<Forecast> fetchCity(http.Client client, String cityName) async {
+Future<CityForecast> fetchCity(http.Client client, String cityName) async {
   final response =
   await client.get('https://api.openweathermap.org/data/2.5/weather?appid=87503ac43c029650c30e680e36218cd5&q=' + cityName + '&units=metric');
 
-  return parseCities(response.body);
+  return _parsedGeneralForecat(response.body);
 }
 
 void _onError(PlacesAutocompleteResponse response) {

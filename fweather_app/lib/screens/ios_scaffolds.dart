@@ -35,7 +35,7 @@ class IOSScaffolds extends StatelessWidget {
         ));
       case Mode.search:
         return CupertinoPageScaffold(
-          child: IOSCitySearch(),
+          child: IOSCitySearch(title: title,),
         );
     }
   }

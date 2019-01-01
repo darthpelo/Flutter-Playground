@@ -48,7 +48,27 @@ class Weather {
   }
 }
 
-class MainInformation {
+class MainSimpleInformation {
+  String temp;
+  String tempMin;
+  String tempMax;
+  String pressure;
+  int humidity;
+
+  MainSimpleInformation(
+      {this.temp, this.tempMin, this.tempMax, this.pressure, this.humidity});
+
+  factory MainSimpleInformation.fromJson(Map<String, dynamic> parsedJson) {
+    return MainSimpleInformation(
+        temp: parsedJson['temp'].toString(),
+        tempMin: parsedJson['temp_min'].toString(),
+        tempMax: parsedJson['temp_max'].toString(),
+        pressure: parsedJson['pressure'].toString(),
+        humidity: parsedJson['humidity']);
+  }
+}
+
+class MainFullInformation {
   String temp;
   String tempMin;
   String tempMax;
@@ -57,7 +77,7 @@ class MainInformation {
   String groundLevel;
   int humidity;
 
-  MainInformation(
+  MainFullInformation(
       {this.temp,
       this.tempMin,
       this.tempMax,
@@ -66,23 +86,41 @@ class MainInformation {
       this.groundLevel,
       this.humidity});
 
-  factory MainInformation.fromJson(Map<String, dynamic> parsedJson) {
-    return MainInformation(
-      temp: parsedJson['temp'].toString(),
-      tempMin: parsedJson['temp_min'].toString(),
-      tempMax: parsedJson['temp_max'].toString(),
-      pressure: parsedJson['pressure'].toString(),
-      seaLevel: parsedJson['sea_level'].toString(),
-      groundLevel: parsedJson['grnd_level'].toString(),
-      humidity: parsedJson['humidity']
+  factory MainFullInformation.fromJson(Map<String, dynamic> parsedJson) {
+    return MainFullInformation(
+        temp: parsedJson['temp'].toString(),
+        tempMin: parsedJson['temp_min'].toString(),
+        tempMax: parsedJson['temp_max'].toString(),
+        pressure: parsedJson['pressure'].toString(),
+        seaLevel: parsedJson['sea_level'].toString(),
+        groundLevel: parsedJson['grnd_level'].toString(),
+        humidity: parsedJson['humidity']);
+  }
+}
+
+class CityForecast {
+  int timeStamp;
+  String name;
+  Weather weather;
+  MainSimpleInformation mainInformation;
+
+  CityForecast({this.timeStamp, this.name, this.weather, this.mainInformation});
+
+  factory CityForecast.fromJson(Map<String, dynamic> parsedJson) {
+    return CityForecast(
+      timeStamp: parsedJson['dt'],
+      name: parsedJson['name'],
+      weather: Weather.fromJson(parsedJson['weather'][0]),
+      mainInformation: MainSimpleInformation.fromJson(parsedJson['main']),
     );
+
   }
 }
 
 class ForecastData {
   int timeStamp;
   Weather weather;
-  MainInformation mainInformation;
+  MainFullInformation mainInformation;
 
   ForecastData({this.timeStamp, this.weather, this.mainInformation});
 
@@ -90,7 +128,7 @@ class ForecastData {
     return ForecastData(
       timeStamp: parsedJson['dt'],
       weather: Weather.fromJson(parsedJson['weather'][0]),
-      mainInformation: MainInformation.fromJson(parsedJson['main']),
+      mainInformation: MainFullInformation.fromJson(parsedJson['main']),
     );
   }
 }
