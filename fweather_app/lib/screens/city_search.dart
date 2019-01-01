@@ -34,7 +34,7 @@ class _CitySearchState extends State<CitySearch> {
                 onPressed: () async {
                   var result = await _handlePressButton();
                   setState(() {
-                    _cities.add(result);
+                    _addCity(result);
                   });
                 }),
           ),
@@ -53,7 +53,9 @@ class _CitySearchState extends State<CitySearch> {
                 return Container(
                   padding: EdgeInsets.all(10.0),
                   child: Material(
-                    color: Colors.transparent,
+                    elevation: 5.0,
+                    borderRadius: BorderRadius.circular(2.0),
+                    color: Colors.cyanAccent,
                     child: Center(
                       child:
                       ListTile(
@@ -70,6 +72,10 @@ class _CitySearchState extends State<CitySearch> {
     );
   }
 
+  void _addCity(String name) {
+    _cities.add(name);
+  }
+  
   void onError(PlacesAutocompleteResponse response) {
     homeScaffoldKey.currentState.showSnackBar(
       SnackBar(content: Text(response.errorMessage)),
@@ -84,14 +90,9 @@ class _CitySearchState extends State<CitySearch> {
       apiKey: kGoogleApiKey,
       onError: onError,
       mode: Mode.overlay,
-      language: "it",
-      components: [
-        Component(Component.country, "it"),
-        Component(Component.country, "nl")
-      ],
+      language: "system",
     );
-
-//    fetchCity(http.Client(), p.description.split(",").first);
+    
     return p.description.split(",").first;
   }
 }
