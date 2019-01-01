@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:fweather_app/fetchModel.dart';
+import 'package:fweather_app/services/fetchModel.dart';
 import 'package:http/http.dart' as http;
 import 'package:fweather_app/widgets/activity_indicator.dart';
 import 'package:fweather_app/model.dart';

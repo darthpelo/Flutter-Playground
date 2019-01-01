@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:fweather_app/screens/city_search.dart';
-import 'package:fweather_app/screens/city_forecast.dart';
 
 void main() => runApp(RoutesWidget());
 
