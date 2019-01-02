@@ -63,9 +63,9 @@ class _IOSCitySearchState extends State<IOSCitySearch> {
               return Container(
                 padding: EdgeInsets.all(10.0),
                 child: Material(
-                  elevation: 5.0,
+                  elevation: 2.5,
                   borderRadius: BorderRadius.circular(2.0),
-                  color: Colors.cyanAccent,
+                  color: Colors.greenAccent,
                   child: Center(
                     child: FutureBuilder<CityForecast>(
                       future: fetchCity(http.Client(), _cities[index]),

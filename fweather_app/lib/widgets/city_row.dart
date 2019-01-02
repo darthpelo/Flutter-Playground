@@ -15,11 +15,38 @@ class CityRow extends StatelessWidget {
   }
 
   Widget _buildRow(CityForecast data) {
-    return ListTile(
-        title: Text(
-          data.name + ' ' + data.weather.main,
-          style: _biggerFont,
-        ),
-        subtitle: Text(data.mainInformation.temp + ' ℃', style: _smallerFont));
+    return ListTile(title: _buildImageRow(data));
+  }
+
+  Widget _buildImageRow(CityForecast data) {
+    var image = Image.network(
+        'http://openweathermap.org/img/w/' + data.weather.icon + '.png');
+    return Row(
+      children: <Widget>[
+        image,
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                padding: const EdgeInsets.only(left: 8.0,
+                    bottom: 8.0),
+                child: Text(
+                  data.name,
+                  style: _biggerFont,
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text(
+                  data.mainInformation.temp + ' ℃',
+                  style: _smallerFont,
+                ),
+              ),
+            ],
+          ),
+        )
+      ],
+    );
   }
 }
