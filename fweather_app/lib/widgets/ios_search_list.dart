@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 import 'package:fweather_app/services/storage.dart';
 import 'package:fweather_app/services/fetchModel.dart';
@@ -62,24 +63,7 @@ class _IOSCitySearchState extends State<IOSCitySearch> {
             (BuildContext context, int index) {
               return Container(
                 padding: EdgeInsets.all(10.0),
-                child: Material(
-                  elevation: 2.5,
-                  borderRadius: BorderRadius.circular(2.0),
-                  color: Colors.greenAccent,
-                  child: Center(
-                    child: FutureBuilder<CityForecast>(
-                      future: fetchCity(http.Client(), _cities[index]),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasError) print(snapshot.error);
-                          if (snapshot.hasData) {
-                            return CityRow(cityForecast: snapshot.data,);
-                          } else {
-                            return ActivityIndicator();
-                          }
-                        }
-                    ),
-                  ),
-                ),
+                child: _buildCell(context, _cities[index]),
               );
             },
             childCount: _cities.length,
@@ -89,6 +73,46 @@ class _IOSCitySearchState extends State<IOSCitySearch> {
     ]);
   }
 
+  Widget _buildCell(BuildContext context, String cityName) {
+    return new Material(
+//      elevation: 2.5,
+//      borderRadius: BorderRadius.circular(2.0),
+      color: Colors.white,
+      child: Center(
+        child: FutureBuilder<CityForecast>(
+            future: fetchCity(http.Client(), cityName),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) print(snapshot.error);
+              if (snapshot.hasData) {
+                return new Slidable(
+                  key: new Key(cityName),
+                  child: CityRow(cityForecast: snapshot.data,),
+                  slideToDismissDelegate: new SlideToDismissDrawerDelegate(
+                    onDismissed: (actionType) {
+                      _deleteCity(cityName);
+                    },
+                  ),
+                  delegate: new SlidableDrawerDelegate(),
+                  actionExtentRatio: 0.25,
+                  secondaryActions: <Widget>[
+                    new IconSlideAction(
+                      caption: 'Delete',
+                      color: Colors.red,
+                      icon: Icons.delete,
+                      onTap: () {
+                        _deleteCity(cityName);
+                      },
+                    ),
+                  ],
+                );
+              } else {
+                return ActivityIndicator();
+              }
+            }),
+      ),
+    );
+  }
+
   void _updateSearchList() {
     loadCities().then((onValue) {
       _reloadData(onValue);
@@ -96,7 +120,13 @@ class _IOSCitySearchState extends State<IOSCitySearch> {
   }
 
   void _updateSearch(String result) {
-    addCity(result).then((newCities){
+    addCity(result).then((newCities) {
+      _reloadData(newCities);
+    });
+  }
+
+  void _deleteCity(String name) {
+    removeCity(name).then((newCities) {
       _reloadData(newCities);
     });
   }

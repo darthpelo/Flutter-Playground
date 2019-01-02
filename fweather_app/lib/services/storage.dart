@@ -17,3 +17,14 @@ Future<List<String>> addCity(String name) async {
 
   return cities;
 }
+
+Future<List<String>> removeCity(String name) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var cities = (prefs.getStringList('cities') ?? []);
+  if (cities.length > 0) {
+    cities.remove(name);
+    prefs.setStringList('cities', cities);
+  }
+
+  return cities;
+}
