@@ -1,5 +1,7 @@
 import 'package:intl/intl.dart';
 
+enum Mode { search, detail }
+
 String readTimestamp(int timestamp) {
   var now = new DateTime.now();
   var format = new DateFormat('d EEEE - HH:mm');

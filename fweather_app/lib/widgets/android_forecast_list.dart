@@ -1,24 +1,34 @@
-import 'package:fweather_app/model.dart';
 import 'package:flutter/material.dart';
-import 'package:fweather_app/widgets/forecast_row.dart';
 
+import 'package:fweather_app/services/fetchModel.dart';
+import 'package:http/http.dart' as http;
+import 'package:fweather_app/widgets/activity_indicator.dart';
+import 'package:fweather_app/model.dart';
+import 'package:fweather_app/widgets/forecast_list.dart';
 
+class MaterialForecastList extends StatelessWidget {
+  final String title;
 
-
-class ForecastList extends StatelessWidget {
-  final Forecast forecast;
-
-  ForecastList({Key key, this.forecast}) : super(key: key);
+  MaterialForecastList({Key key, this.title});
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        padding: const EdgeInsets.all(16.0),
-        itemCount: 39,
-        itemBuilder: (context, i) {
-          if (i.isOdd) return Divider();
-          final index = i ~/ 2;
-          return ForecastRow(forecast: forecast.forecastList[index]);
-        });
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(title),
+      ),
+      body: FutureBuilder<Forecast>(
+        future: fetchCities(http.Client()),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) print(snapshot.error);
+
+          if (snapshot.hasData) {
+            return ForecastList(forecast: snapshot.data);
+          } else {
+            return Center(child: ActivityIndicator());
+          }
+        },
+      ),
+    );
   }
 }

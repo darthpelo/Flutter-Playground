@@ -4,11 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:fweather_app/model.dart';
 import 'package:fweather_app/widgets/forecast_row.dart';
 
-class IOSForecastList extends StatelessWidget {
+class CupertinoForecastList extends StatelessWidget {
   final Forecast forecast;
   final String title;
 
-  IOSForecastList({Key key, this.forecast, this.title}) : super(key: key);
+  CupertinoForecastList({Key key, this.forecast, this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

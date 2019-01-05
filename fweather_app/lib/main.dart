@@ -26,6 +26,7 @@ class _MyAppState extends State<MyApp> {
 
     return MaterialApp(
       title: appTitle,
+//      theme: ThemeData.dark(),
       home: CitySearch(),
     );
   }

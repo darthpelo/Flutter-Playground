@@ -7,14 +7,13 @@ import 'package:fweather_app/services/fetchModel.dart';
 import 'package:fweather_app/widgets/activity_indicator.dart';
 import 'package:fweather_app/widgets/ios_forecast_list.dart';
 import 'package:fweather_app/widgets/ios_search_list.dart';
+import 'package:fweather_app/utils.dart';
 
-enum Mode { search, detail }
-
-class IOSScaffolds extends StatelessWidget {
+class CupertinoScaffolds extends StatelessWidget {
   final String title;
   final Mode mode;
 
-  IOSScaffolds({this.title, this.mode});
+  CupertinoScaffolds({this.title, this.mode});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +26,7 @@ class IOSScaffolds extends StatelessWidget {
             if (snapshot.hasError) print(snapshot.error);
 
             if (snapshot.hasData) {
-              return IOSForecastList(forecast: snapshot.data, title: title);
+              return CupertinoForecastList(forecast: snapshot.data, title: title);
             } else {
               return Center(child: ActivityIndicator());
             }
@@ -35,7 +34,7 @@ class IOSScaffolds extends StatelessWidget {
         ));
       case Mode.search:
         return CupertinoPageScaffold(
-          child: IOSCitySearch(title: title,),
+          child: CupertinoCitySearch(title: title,),
         );
     }
   }

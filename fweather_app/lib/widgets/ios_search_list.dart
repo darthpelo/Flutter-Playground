@@ -9,20 +9,20 @@ import 'package:fweather_app/model.dart';
 import 'package:fweather_app/widgets/city_row.dart';
 import 'package:fweather_app/widgets/activity_indicator.dart';
 
-class IOSCitySearch extends StatefulWidget {
+class CupertinoCitySearch extends StatefulWidget {
   final String title;
 
-  IOSCitySearch({this.title});
+  CupertinoCitySearch({this.title});
 
   @override
-  _IOSCitySearchState createState() => _IOSCitySearchState(title: title);
+  _CupertinoCitySearchState createState() => _CupertinoCitySearchState(title: title);
 }
 
-class _IOSCitySearchState extends State<IOSCitySearch> {
+class _CupertinoCitySearchState extends State<CupertinoCitySearch> {
   List<String> _cities = [];
   final String title;
 
-  _IOSCitySearchState({this.title});
+  _CupertinoCitySearchState({this.title});
 
   @override
   void initState() {
@@ -40,14 +40,11 @@ class _IOSCitySearchState extends State<IOSCitySearch> {
     return CustomScrollView(slivers: <Widget>[
       CupertinoSliverNavigationBar(
         largeTitle: Text("Cities"),
-        trailing: Material(
-          child: new IconButton(
-              icon: const Icon(Icons.add),
-              onPressed: () async {
-                var result = await cityPrediction(context);
-
-                _updateSearch(result);
-              }),
+        trailing: Container(
+          padding: EdgeInsets.all(1.0),
+          child: Material(
+            child: _addButton(context),
+          ),
         ),
       ),
       SliverPadding(
@@ -60,23 +57,37 @@ class _IOSCitySearchState extends State<IOSCitySearch> {
             .padding,
         sliver: SliverList(
           delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) {
+            (context, idx) {
+              if (idx.isOdd) return Divider(
+                color: Colors.black54,
+              );
+
+              final index = idx ~/ 2;
+
               return Container(
                 padding: EdgeInsets.all(10.0),
                 child: _buildCell(context, _cities[index]),
               );
             },
-            childCount: _cities.length,
+            childCount: _cities.length * 2,
           ),
         ),
       ),
     ]);
   }
 
+  Widget _addButton(BuildContext context) {
+    return new IconButton(
+        icon: const Icon(Icons.add),
+        onPressed: () async {
+          var result = await cityPrediction(context);
+
+          _updateSearch(result);
+        });
+  }
+
   Widget _buildCell(BuildContext context, String cityName) {
     return new Material(
-//      elevation: 2.5,
-//      borderRadius: BorderRadius.circular(2.0),
       color: Colors.white,
       child: Center(
         child: FutureBuilder<CityForecast>(
