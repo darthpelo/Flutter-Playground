@@ -60,7 +60,7 @@ class _MaterialCitySearchState extends State<MaterialCitySearch> {
           final cityName = _cities[index];
 
           return FutureBuilder<CityForecast>(
-              future: fetchCity(http.Client(), cityName),
+              future: fetchCityWeather(http.Client(), cityName),
               builder: (context, snapshot) {
                 if (snapshot.hasError) print(snapshot.error);
                 if (snapshot.hasData) {

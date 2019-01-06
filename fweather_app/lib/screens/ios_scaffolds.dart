@@ -21,7 +21,7 @@ class CupertinoScaffolds extends StatelessWidget {
       case Mode.detail:
         return CupertinoPageScaffold(
             child: FutureBuilder<Forecast>(
-          future: fetchCities(http.Client()),
+          future: fetchCityForecast(http.Client(), title),
           builder: (context, snapshot) {
             if (snapshot.hasError) print(snapshot.error);
 

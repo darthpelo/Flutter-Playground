@@ -18,7 +18,7 @@ class MaterialForecastList extends StatelessWidget {
         title: Text(title),
       ),
       body: FutureBuilder<Forecast>(
-        future: fetchCities(http.Client()),
+        future: fetchCityForecast(http.Client(), title),
         builder: (context, snapshot) {
           if (snapshot.hasError) print(snapshot.error);
 

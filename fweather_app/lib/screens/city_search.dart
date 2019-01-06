@@ -6,8 +6,8 @@ import 'package:fweather_app/utils.dart';
 import 'package:fweather_app/screens/ios_scaffolds.dart';
 import 'package:fweather_app/screens/android_scaffolds.dart';
 
-class CitySearch extends StatelessWidget {
-  CitySearch({Key key}): super(key: key);
+class CitySearchScreen extends StatelessWidget {
+  CitySearchScreen({Key key}): super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -6,7 +6,8 @@ import 'package:fweather_app/utils.dart';
 class ForecastRow extends StatelessWidget {
   final ForecastData forecast;
   final _biggerFont = const TextStyle(fontSize: 18.0);
-  final _smallerFont = const TextStyle(color: Colors.blueGrey, fontSize: 16.0);
+  final _smallerFont = const TextStyle(
+      color: Colors.blueGrey, fontSize: 16.0, fontWeight: FontWeight.bold);
 
   ForecastRow({Key key, this.forecast}) : super(key: key);
 
@@ -16,11 +17,17 @@ class ForecastRow extends StatelessWidget {
   }
 
   Widget _buildRow(ForecastData data) {
+    var image = Image.network(
+        'http://openweathermap.org/img/w/' + data.weather.icon + '.png');
     return ListTile(
+        isThreeLine: true,
+        leading: image,
         title: Text(
-          readTimestamp(data.timeStamp) + ' ' + data.weather.description,
+          readTimestamp(data.timeStamp),
           style: _biggerFont,
         ),
-        subtitle: Text(data.mainInformation.temp + ' ℃', style: _smallerFont));
+        subtitle: Text(
+            data.mainInformation.temp + ' ℃\n' + data.weather.description,
+            style: _smallerFont));
   }
 }

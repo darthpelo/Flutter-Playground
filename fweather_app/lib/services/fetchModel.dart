@@ -26,16 +26,21 @@ CityForecast _parsedGeneralForecat(String responseBody) {
   return forecast;
 }
 
-Future<Forecast> fetchCities(http.Client client) async {
-  final response =
-  await client.get('https://api.openweathermap.org/data/2.5/forecast?appid=87503ac43c029650c30e680e36218cd5&q=amsterdam&units=metric');
+Future<Forecast> fetchCityForecast(http.Client client, String cityName) async {
+  final response = await client.get(
+      'https://api.openweathermap.org/data/2.5/forecast?appid=87503ac43c029650c30e680e36218cd5&q=' +
+          cityName +
+          '&units=metric');
 
   return _parseDetailedForecast(response.body);
 }
 
-Future<CityForecast> fetchCity(http.Client client, String cityName) async {
-  final response =
-  await client.get('https://api.openweathermap.org/data/2.5/weather?appid=87503ac43c029650c30e680e36218cd5&q=' + cityName + '&units=metric');
+Future<CityForecast> fetchCityWeather(
+    http.Client client, String cityName) async {
+  final response = await client.get(
+      'https://api.openweathermap.org/data/2.5/weather?appid=87503ac43c029650c30e680e36218cd5&q=' +
+          cityName +
+          '&units=metric');
 
   return _parsedGeneralForecat(response.body);
 }

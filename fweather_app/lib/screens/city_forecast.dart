@@ -6,19 +6,10 @@ import 'package:fweather_app/utils.dart';
 import 'package:fweather_app/widgets/android_forecast_list.dart';
 import 'package:fweather_app/screens/ios_scaffolds.dart';
 
-class CityForecast extends StatefulWidget {
+class CityForecastScreen extends StatelessWidget {
   final String title;
 
-  CityForecast({this.title});
-
-  @override
-  _CityForecastState createState() => _CityForecastState(title: title);
-}
-
-class _CityForecastState extends State<CityForecast> {
-  final String title;
-
-  _CityForecastState({this.title});
+  CityForecastScreen({Key key, this.title}): super(key: key);
 
   @override
   Widget build(BuildContext context) {

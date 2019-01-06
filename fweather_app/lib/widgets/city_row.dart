@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:fweather_app/model.dart';
+import 'package:fweather_app/screens/city_forecast.dart';
 
 class CityRow extends StatelessWidget {
   final CityForecast cityForecast;
@@ -11,17 +12,22 @@ class CityRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _buildRow(cityForecast);
+    return ListTile(
+      title: _buildImageRow(context, cityForecast),
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    CityForecastScreen(title: cityForecast.name)));
+      },
+    );
   }
 
-  Widget _buildRow(CityForecast data) {
-    return ListTile(title: _buildImageRow(data));
-  }
-
-  Widget _buildImageRow(CityForecast data) {
+  Widget _buildImageRow(BuildContext context, CityForecast data) {
     var image = Image.network(
         'http://openweathermap.org/img/w/' + data.weather.icon + '.png');
-    return Row(
+    return new Row(
       children: <Widget>[
         image,
         Expanded(
@@ -29,8 +35,7 @@ class CityRow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                padding: const EdgeInsets.only(left: 8.0,
-                    bottom: 8.0),
+                padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
                 child: Text(
                   data.name,
                   style: _biggerFont,

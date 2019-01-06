@@ -94,7 +94,7 @@ class _CupertinoCitySearchState extends State<CupertinoCitySearch> {
       color: Colors.white,
       child: Center(
         child: FutureBuilder<CityForecast>(
-            future: fetchCity(http.Client(), cityName),
+            future: fetchCityWeather(http.Client(), cityName),
             builder: (context, snapshot) {
               if (snapshot.hasError) print(snapshot.error);
               if (snapshot.hasData) {
