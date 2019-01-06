@@ -8,6 +8,7 @@ import 'package:fweather_app/services/fetchModel.dart';
 import 'package:fweather_app/model.dart';
 import 'package:fweather_app/widgets/city_row.dart';
 import 'package:fweather_app/widgets/activity_indicator.dart';
+import 'package:fweather_app/widgets/cellDivider.dart';
 
 class CupertinoCitySearch extends StatefulWidget {
   final String title;
@@ -28,7 +29,9 @@ class _CupertinoCitySearchState extends State<CupertinoCitySearch> {
   void initState() {
     super.initState();
 
-    _updateSearchList();
+    loadCities().then((cityList) {
+      _reloadData(cityList);
+    });
   }
 
   @override
@@ -58,9 +61,7 @@ class _CupertinoCitySearchState extends State<CupertinoCitySearch> {
         sliver: SliverList(
           delegate: SliverChildBuilderDelegate(
             (context, idx) {
-              if (idx.isOdd) return Divider(
-                color: Colors.black54,
-              );
+              if (idx.isOdd) return CellDivider();
 
               final index = idx ~/ 2;
 
@@ -82,7 +83,9 @@ class _CupertinoCitySearchState extends State<CupertinoCitySearch> {
         onPressed: () async {
           var result = await cityPrediction(context);
 
-          _updateSearch(result);
+          addCity(result).then((newList) {
+            _reloadData(newList);
+          });
         });
   }
 
@@ -100,7 +103,9 @@ class _CupertinoCitySearchState extends State<CupertinoCitySearch> {
                   child: CityRow(cityForecast: snapshot.data,),
                   slideToDismissDelegate: new SlideToDismissDrawerDelegate(
                     onDismissed: (actionType) {
-                      _deleteCity(cityName);
+                      removeCity(cityName).then((newList) {
+                        _reloadData(newList);
+                      });
                     },
                   ),
                   delegate: new SlidableDrawerDelegate(),
@@ -111,7 +116,9 @@ class _CupertinoCitySearchState extends State<CupertinoCitySearch> {
                       color: Colors.red,
                       icon: Icons.delete,
                       onTap: () {
-                        _deleteCity(cityName);
+                        removeCity(cityName).then((newList) {
+                          _reloadData(newList);
+                        });
                       },
                     ),
                   ],
@@ -122,24 +129,6 @@ class _CupertinoCitySearchState extends State<CupertinoCitySearch> {
             }),
       ),
     );
-  }
-
-  void _updateSearchList() {
-    loadCities().then((onValue) {
-      _reloadData(onValue);
-    });
-  }
-
-  void _updateSearch(String result) {
-    addCity(result).then((newCities) {
-      _reloadData(newCities);
-    });
-  }
-
-  void _deleteCity(String name) {
-    removeCity(name).then((newCities) {
-      _reloadData(newCities);
-    });
   }
 
   void _reloadData(List<String> newCities) {
