@@ -27,7 +27,7 @@ class ForecastRow extends StatelessWidget {
           style: _biggerFont,
         ),
         subtitle: Text(
-            data.mainInformation.temp + ' ℃\n' + data.weather.description,
+            data.mainInformation.temp.roundToDouble().toString() + ' ℃\n' + data.weather.description,
             style: _smallerFont));
   }
 }

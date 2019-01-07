@@ -49,18 +49,21 @@ class Weather {
 }
 
 class MainSimpleInformation {
-  String temp;
+  double temp;
   String tempMin;
   String tempMax;
   String pressure;
   int humidity;
 
+  double a = 0;
+
   MainSimpleInformation(
       {this.temp, this.tempMin, this.tempMax, this.pressure, this.humidity});
 
   factory MainSimpleInformation.fromJson(Map<String, dynamic> parsedJson) {
+
     return MainSimpleInformation(
-        temp: parsedJson['temp'].toString(),
+        temp: double.parse(parsedJson['temp'].toString()),
         tempMin: parsedJson['temp_min'].toString(),
         tempMax: parsedJson['temp_max'].toString(),
         pressure: parsedJson['pressure'].toString(),
@@ -69,7 +72,7 @@ class MainSimpleInformation {
 }
 
 class MainFullInformation {
-  String temp;
+  double temp;
   String tempMin;
   String tempMax;
   String pressure;
@@ -88,7 +91,7 @@ class MainFullInformation {
 
   factory MainFullInformation.fromJson(Map<String, dynamic> parsedJson) {
     return MainFullInformation(
-        temp: parsedJson['temp'].toString(),
+        temp: double.parse(parsedJson['temp'].toString()),
         tempMin: parsedJson['temp_min'].toString(),
         tempMax: parsedJson['temp_max'].toString(),
         pressure: parsedJson['pressure'].toString(),

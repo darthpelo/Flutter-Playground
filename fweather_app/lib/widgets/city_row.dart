@@ -44,7 +44,7 @@ class CityRow extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Text(
-                  data.mainInformation.temp + ' ℃',
+                  data.mainInformation.temp.ceilToDouble().toString() + ' ℃',
                   style: _smallerFont,
                 ),
               ),
