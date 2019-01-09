@@ -6,7 +6,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:fweather_app/services/storage.dart';
 import 'package:fweather_app/services/fetchModel.dart';
 import 'package:fweather_app/model.dart';
-import 'package:fweather_app/widgets/city_row.dart';
+import 'package:fweather_app/widgets/city_cell.dart';
 import 'package:fweather_app/widgets/activity_indicator.dart';
 import 'package:fweather_app/widgets/cellDivider.dart';
 
@@ -66,7 +66,7 @@ class _MaterialCitySearchState extends State<MaterialCitySearch> {
                 if (snapshot.hasData) {
                   return new Slidable(
                     key: new Key(cityName),
-                    child: CityRow(
+                    child: CityCell(
                       cityForecast: snapshot.data,
                     ),
                     slideToDismissDelegate: new SlideToDismissDrawerDelegate(

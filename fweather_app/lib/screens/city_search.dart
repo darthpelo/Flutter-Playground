@@ -14,7 +14,7 @@ class CitySearchScreen extends StatelessWidget {
     if (Platform.isIOS) {
       return CupertinoScaffolds(title: 'Home', mode: Mode.search,);
     } else {
-      return MaterialScaffolds(title: 'Home', mode: Mode.search,);
+      return AndroidScaffolds(title: 'Home', mode: Mode.search,);
     }
   }
 }

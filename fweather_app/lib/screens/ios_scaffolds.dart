@@ -5,8 +5,8 @@ import 'package:http/http.dart' as http;
 import 'package:fweather_app/model.dart';
 import 'package:fweather_app/services/fetchModel.dart';
 import 'package:fweather_app/widgets/activity_indicator.dart';
-import 'package:fweather_app/widgets/ios_forecast_list.dart';
-import 'package:fweather_app/widgets/ios_search_list.dart';
+import 'package:fweather_app/widgets/iOS/ios_forecast_list.dart';
+import 'package:fweather_app/widgets/iOS/ios_search_list.dart';
 import 'package:fweather_app/utils.dart';
 
 class CupertinoScaffolds extends StatelessWidget {

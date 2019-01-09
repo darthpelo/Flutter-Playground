@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'dart:io';
 
 import 'package:fweather_app/utils.dart';
-import 'package:fweather_app/widgets/android_forecast_list.dart';
+import 'package:fweather_app/widgets/android/android_forecast_list.dart';
 import 'package:fweather_app/screens/ios_scaffolds.dart';
 
 class CityForecastScreen extends StatelessWidget {
@@ -19,7 +19,7 @@ class CityForecastScreen extends StatelessWidget {
     if (Platform.isIOS) {
       return CupertinoScaffolds(title: _title, mode: Mode.detail,);
     } else {
-      return MaterialForecastList(
+      return AndroidForecastList(
         title: _title,
       );
     }

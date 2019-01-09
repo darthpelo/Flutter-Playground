@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:fweather_app/model.dart';
 import 'package:fweather_app/screens/city_forecast.dart';
 
-class CityRow extends StatelessWidget {
+class CityCell extends StatelessWidget {
   final CityForecast cityForecast;
   final _biggerFont = const TextStyle(fontSize: 18.0);
   final _smallerFont = const TextStyle(color: Colors.blueGrey, fontSize: 16.0);
 
-  CityRow({Key key, this.cityForecast}) : super(key: key);
+  CityCell({Key key, this.cityForecast}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +25,12 @@ class CityRow extends StatelessWidget {
   }
 
   Widget _buildImageRow(BuildContext context, CityForecast data) {
-    var image = Image.network(
-        'http://openweathermap.org/img/w/' + data.weather.icon + '.png');
     return new Row(
       children: <Widget>[
-        image,
+        Image.network(
+          'http://openweathermap.org/img/w/' + data.weather.icon + '.png',
+          scale: 1.3,
+        ),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:fweather_app/services/fetchModel.dart';
-import 'package:http/http.dart' as http;
 import 'package:fweather_app/widgets/activity_indicator.dart';
 import 'package:fweather_app/model.dart';
-import 'package:fweather_app/widgets/forecast_list.dart';
+import 'package:fweather_app/widgets/forecast_row.dart';
 
-class MaterialForecastList extends StatelessWidget {
+class AndroidForecastList extends StatelessWidget {
   final String title;
 
-  MaterialForecastList({Key key, this.title});
+  AndroidForecastList({Key key, this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +23,23 @@ class MaterialForecastList extends StatelessWidget {
           if (snapshot.hasError) print(snapshot.error);
 
           if (snapshot.hasData) {
-            return ForecastList(forecast: snapshot.data);
+            return _buildList(context, snapshot.data);
           } else {
             return Center(child: ActivityIndicator());
           }
         },
       ),
     );
+  }
+
+  Widget _buildList(BuildContext context, Forecast forecast) {
+    return ListView.builder(
+        padding: const EdgeInsets.all(16.0),
+        itemCount: forecast.forecastList.length,
+        itemBuilder: (context, i) {
+          if (i.isOdd) return Divider();
+          final index = i ~/ 2;
+          return ForecastRow(forecast: forecast.forecastList[index]);
+        });
   }
 }
