@@ -33,9 +33,7 @@ class CupertinoScaffolds extends StatelessWidget {
           },
         ));
       case Mode.search:
-        return CupertinoPageScaffold(
-          child: CupertinoCitySearch(title: title,),
-        );
+        return CupertinoCitySearch(title: title,);
     }
   }
 }

@@ -33,62 +33,86 @@ class _CupertinoCitySearchState extends State<CupertinoCitySearch> {
 
   @override
   Widget build(BuildContext context) {
-    return _buildList(context);
+    if (_cities.length > 0) {
+      return _buildList(context);
+    } else {
+      return _buildEmptyList(context);
+    }
+  }
+
+  Widget _buildEmptyList(BuildContext context) {
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        middle: Text("Cities"),
+        trailing: _addButton(context),
+      ),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Text(
+              'Press + to add the cities you want to monitor',
+              style: Theme.of(context).textTheme.title,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _buildList(BuildContext context) {
-    return CustomScrollView(slivers: <Widget>[
-      CupertinoSliverNavigationBar(
-        largeTitle: Text("Cities"),
-        trailing: Container(
-          padding: EdgeInsets.all(1.0),
-          child: Material(
-            child: _addButton(context),
+    return CupertinoPageScaffold(
+      child: CustomScrollView(slivers: <Widget>[
+        CupertinoSliverNavigationBar(
+          largeTitle: Text("Cities"),
+          trailing: _addButton(context),
+        ),
+        SliverPadding(
+          padding: MediaQuery.of(context)
+              .removePadding(
+                removeTop: true,
+                removeLeft: true,
+                removeRight: true,
+              )
+              .padding,
+          sliver: SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, idx) {
+                if (idx.isOdd) return CellDivider();
+
+                final index = idx ~/ 2;
+
+                return Container(
+                  padding: EdgeInsets.all(10.0),
+                  child: IOSCityCell(
+                    cityName: _cities[index],
+                    onRemoved: (name) {
+                      _delete(name);
+                    },
+                  ),
+                );
+              },
+              childCount: _cities.length * 2,
+            ),
           ),
         ),
-      ),
-      SliverPadding(
-        padding: MediaQuery.of(context)
-            .removePadding(
-              removeTop: true,
-              removeLeft: true,
-              removeRight: true,
-            )
-            .padding,
-        sliver: SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, idx) {
-              if (idx.isOdd) return CellDivider();
-
-              final index = idx ~/ 2;
-
-              return Container(
-                padding: EdgeInsets.all(10.0),
-                child: IOSCityCell(
-                  cityName: _cities[index],
-                  onRemoved: (name) {
-                    _delete(name);
-                  },
-                ),
-              );
-            },
-            childCount: _cities.length * 2,
-          ),
-        ),
-      ),
-    ]);
+      ]),
+    );
   }
 
   Widget _addButton(BuildContext context) {
-    return new IconButton(
-        icon: const Icon(Icons.add),
-        onPressed: () async {
-          var result = await cityPrediction(context);
+    return new Container(
+        padding: EdgeInsets.all(1.0),
+        child: Material(
+            child: IconButton(
+                icon: const Icon(Icons.add),
+                onPressed: () async {
+                  var result = await cityPrediction(context);
 
-          addCity(result).then((newList) {
-            _reloadData(newList);
-          });
-        });
+                  addCity(result).then((newList) {
+                    _reloadData(newList);
+                  });
+                })));
   }
 
   void _delete(String city) {
