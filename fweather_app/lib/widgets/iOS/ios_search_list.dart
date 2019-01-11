@@ -5,6 +5,7 @@ import 'package:fweather_app/services/storage.dart';
 import 'package:fweather_app/services/fetchModel.dart';
 import 'package:fweather_app/widgets/cellDivider.dart';
 import 'ios_city_cell.dart';
+import 'package:fweather_app/widgets/list_empty.dart';
 
 class CupertinoCitySearch extends StatefulWidget {
   final String title;
@@ -46,17 +47,7 @@ class _CupertinoCitySearchState extends State<CupertinoCitySearch> {
         middle: Text("Cities"),
         trailing: _addButton(context),
       ),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Text(
-              'Press + to add the cities you want to monitor',
-              style: Theme.of(context).textTheme.title,
-            ),
-          ],
-        ),
-      ),
+      child: EmptyList(text: 'Press + to add the cities\nyou want to monitor'),
     );
   }
 

@@ -9,6 +9,7 @@ import 'package:fweather_app/model.dart';
 import 'package:fweather_app/widgets/city_cell.dart';
 import 'package:fweather_app/widgets/activity_indicator.dart';
 import 'package:fweather_app/widgets/cellDivider.dart';
+import 'package:fweather_app/widgets/list_empty.dart';
 
 class MaterialCitySearch extends StatefulWidget {
   @override
@@ -22,7 +23,7 @@ class _MaterialCitySearchState extends State<MaterialCitySearch> {
   void initState() {
     super.initState();
 
-    loadCities().then((cityList){
+    loadCities().then((cityList) {
       _reloadData(cityList);
     });
   }
@@ -38,7 +39,7 @@ class _MaterialCitySearchState extends State<MaterialCitySearch> {
         onPressed: () async {
           var result = await cityPrediction(context);
 
-          addCity(result).then((newList){
+          addCity(result).then((newList) {
             _reloadData(newList);
           });
         },
@@ -49,53 +50,56 @@ class _MaterialCitySearchState extends State<MaterialCitySearch> {
   }
 
   Widget _buildList(BuildContext context) {
-    return ListView.builder(
-        padding: const EdgeInsets.all(16.0),
-        itemCount: _cities.length * 2,
-        itemBuilder: (context, idx) {
-          if (idx.isOdd)
-            return CellDivider();
+    if (_cities.length > 0) {
+      return ListView.builder(
+          padding: const EdgeInsets.all(16.0),
+          itemCount: _cities.length * 2,
+          itemBuilder: (context, idx) {
+            if (idx.isOdd) return CellDivider();
 
-          final index = idx ~/ 2;
-          final cityName = _cities[index];
+            final index = idx ~/ 2;
+            final cityName = _cities[index];
 
-          return FutureBuilder<CityForecast>(
-              future: fetchCityWeather(http.Client(), cityName),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) print(snapshot.error);
-                if (snapshot.hasData) {
-                  return new Slidable(
-                    key: new Key(cityName),
-                    child: CityCell(
-                      cityForecast: snapshot.data,
-                    ),
-                    slideToDismissDelegate: new SlideToDismissDrawerDelegate(
-                      onDismissed: (actionType) {
-                        removeCity(cityName).then((newList){
-                          _reloadData(newList);
-                        });
-                      },
-                    ),
-                    delegate: new SlidableDrawerDelegate(),
-                    actionExtentRatio: 0.25,
-                    secondaryActions: <Widget>[
-                      new IconSlideAction(
-                        caption: 'Delete',
-                        color: Colors.red,
-                        icon: Icons.delete,
-                        onTap: () {
-                          removeCity(cityName).then((newList){
+            return FutureBuilder<CityForecast>(
+                future: fetchCityWeather(http.Client(), cityName),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) print(snapshot.error);
+                  if (snapshot.hasData) {
+                    return new Slidable(
+                      key: new Key(cityName),
+                      child: CityCell(
+                        cityForecast: snapshot.data,
+                      ),
+                      slideToDismissDelegate: new SlideToDismissDrawerDelegate(
+                        onDismissed: (actionType) {
+                          removeCity(cityName).then((newList) {
                             _reloadData(newList);
                           });
                         },
                       ),
-                    ],
-                  );
-                } else {
-                  return ActivityIndicator();
-                }
-              });
-        });
+                      delegate: new SlidableDrawerDelegate(),
+                      actionExtentRatio: 0.25,
+                      secondaryActions: <Widget>[
+                        new IconSlideAction(
+                          caption: 'Delete',
+                          color: Colors.red,
+                          icon: Icons.delete,
+                          onTap: () {
+                            removeCity(cityName).then((newList) {
+                              _reloadData(newList);
+                            });
+                          },
+                        ),
+                      ],
+                    );
+                  } else {
+                    return ActivityIndicator();
+                  }
+                });
+          });
+    } else {
+      return EmptyList(text: 'Press + to add the cities\nyou want to monitor',);
+    }
   }
 
   void _reloadData(List<String> newCities) {
