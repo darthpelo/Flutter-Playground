@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
 
 import 'package:fweather_app/screens/city_search.dart';
 import 'package:fweather_app/screens/city_forecast.dart';
@@ -22,9 +23,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final appTitle = 'Forecast';
 
-    return MaterialApp(
-      title: appTitle,
-      home: CitySearchScreen(),
-    );
+    if (Platform.isIOS) {
+      return CitySearchScreen();
+    } else {
+      return MaterialApp(
+        title: appTitle,
+        home: CitySearchScreen(),
+        theme: ThemeData(
+            primarySwatch: Colors.orange,
+            selectedRowColor: Colors.orangeAccent
+        ),
+      );
+    }
   }
 }
