@@ -5,7 +5,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:fweather_app/model.dart';
 import 'package:fweather_app/services/fetchModel.dart';
 import 'package:fweather_app/widgets/city_cell.dart';
-import 'package:fweather_app/widgets/activity_indicator.dart';
+import 'package:fweather_app/widgets/progress.dart';
 
 class IOSCityCell extends StatelessWidget {
   final ValueChanged<String> onRemoved;
@@ -47,7 +47,7 @@ class IOSCityCell extends StatelessWidget {
                   ],
                 );
               } else {
-                return ActivityIndicator();
+                return PlatformProgress();
               }
             }),
       ),

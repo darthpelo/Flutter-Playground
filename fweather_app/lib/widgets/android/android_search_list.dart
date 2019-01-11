@@ -7,7 +7,7 @@ import 'package:fweather_app/services/storage.dart';
 import 'package:fweather_app/services/fetchModel.dart';
 import 'package:fweather_app/model.dart';
 import 'package:fweather_app/widgets/city_cell.dart';
-import 'package:fweather_app/widgets/activity_indicator.dart';
+import 'package:fweather_app/widgets/progress.dart';
 import 'package:fweather_app/widgets/cellDivider.dart';
 import 'package:fweather_app/widgets/list_empty.dart';
 
@@ -93,7 +93,7 @@ class _MaterialCitySearchState extends State<MaterialCitySearch> {
                       ],
                     );
                   } else {
-                    return ActivityIndicator();
+                    return PlatformProgress();
                   }
                 });
           });
