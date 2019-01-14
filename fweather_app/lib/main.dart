@@ -27,8 +27,8 @@ class MyApp extends StatelessWidget {
         home: CitySearchScreen(),
         theme: ThemeData(
           brightness: Brightness.light,
-          primaryColor: Colors.white,
-          accentColor: Colors.orange,
+          primaryColor: Colors.orange,
+          accentColor: Colors.orangeAccent,
           primaryColorDark: Colors.deepOrangeAccent,
         ));
   }
