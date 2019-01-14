@@ -13,3 +13,4 @@ pubspec.lock
 doc/api/
 /fweather_app/lib/keyschain.dart
 key.properties
+.DS_Store
