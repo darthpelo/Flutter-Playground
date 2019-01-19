@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 
-abstract class PlatformWidget<iOS extends Widget, A extends Widget>
+abstract class PlatformWidget<iOS extends Widget, android extends Widget>
     extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -15,5 +15,5 @@ abstract class PlatformWidget<iOS extends Widget, A extends Widget>
 
   iOS createIosWidget(BuildContext context);
 
-  A createAndroidWidget(BuildContext context);
+  android createAndroidWidget(BuildContext context);
 }
