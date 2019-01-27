@@ -18,7 +18,7 @@ Forecast _parseDetailedForecast(String responseBody) {
   return forecast;
 }
 
-CityForecast _parsedGeneralForecat(String responseBody) {
+CityForecast _parsedGeneralForecast(String responseBody) {
   final parsed = json.decode(responseBody);
 
   CityForecast forecast = new CityForecast.fromJson(parsed);
@@ -42,7 +42,7 @@ Future<CityForecast> fetchCityWeather(
           cityName +
           '&units=metric');
 
-  return _parsedGeneralForecat(response.body);
+  return _parsedGeneralForecast(response.body);
 }
 
 void _onError(PlacesAutocompleteResponse response) {

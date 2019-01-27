@@ -23,9 +23,9 @@ class _MaterialCitySearchState extends State<MaterialCitySearch> {
   void initState() {
     super.initState();
 
-    loadCities().then((cityList) {
-      _reloadData(cityList);
-    });
+//    loadCities().then((cityList) {
+//      _reloadData(cityList);
+//    });
   }
 
   @override

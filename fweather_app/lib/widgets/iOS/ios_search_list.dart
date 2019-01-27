@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:fweather_app/services/storage.dart';
 import 'package:fweather_app/services/fetchModel.dart';
 import 'package:fweather_app/widgets/cellDivider.dart';
 import 'ios_city_cell.dart';
 import 'package:fweather_app/widgets/list_empty.dart';
+
 
 class CupertinoCitySearch extends StatefulWidget {
   final String title;
@@ -18,7 +20,7 @@ class CupertinoCitySearch extends StatefulWidget {
 }
 
 class _CupertinoCitySearchState extends State<CupertinoCitySearch> {
-  List<String> _cities = [];
+  List<DocumentSnapshot> _cities = [];
   final String title;
 
   _CupertinoCitySearchState({this.title});
@@ -27,7 +29,7 @@ class _CupertinoCitySearchState extends State<CupertinoCitySearch> {
   void initState() {
     super.initState();
 
-    loadCities().then((cityList) {
+    loadRemote().then((cityList) {
       _reloadData(cityList);
     });
   }
@@ -73,10 +75,12 @@ class _CupertinoCitySearchState extends State<CupertinoCitySearch> {
 
                 final index = idx ~/ 2;
 
+                final record = Record.fromSnapshot(_cities[index]);
                 return Container(
                   padding: EdgeInsets.all(10.0),
                   child: IOSCityCell(
-                    cityName: _cities[index],
+                    key: ValueKey(record.name),
+                    cityName: record.name,
                     onRemoved: (name) {
                       _delete(name);
                     },
@@ -99,20 +103,20 @@ class _CupertinoCitySearchState extends State<CupertinoCitySearch> {
                 icon: const Icon(Icons.add),
                 onPressed: () async {
                   var result = await cityPrediction(context);
-
-                  addCity(result).then((newList) {
-                    _reloadData(newList);
+                  create(result, _cities.length);
+                  loadRemote().then((cityList) {
+                    _reloadData(cityList);
                   });
                 })));
   }
 
   void _delete(String city) {
     removeCity(city).then((newList) {
-      _reloadData(newList);
+//      _reloadData(newList);
     });
   }
 
-  void _reloadData(List<String> newCities) {
+  void _reloadData(List<DocumentSnapshot> newCities) {
     setState(() {
       _cities = newCities;
     });
